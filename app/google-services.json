@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "948966880274",
+    "firebase_url": "https://madnew-6b298.firebaseio.com",
+    "project_id": "madnew-6b298",
+    "storage_bucket": "madnew-6b298.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948966880274:android:4d4e008dfb4db716d654cb",
+        "android_client_info": {
+          "package_name": "com.example.userauthentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948966880274-04b9p469bl4l4ghoufjm6os9vf05i49k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9AYK7WEMLp74qZxhmiwO1k8fOLYB6clg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948966880274-04b9p469bl4l4ghoufjm6os9vf05i49k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
