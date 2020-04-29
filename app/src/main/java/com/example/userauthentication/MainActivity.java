@@ -1,15 +1,18 @@
 package com.example.userauthentication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     String userId;
     Button resendCode;
+    Button resetPassLocal;
+    FirebaseUser user;
 
 
     @Override
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         phone = findViewById(R.id.profilePhone);
         fullName = findViewById(R.id.profileName);
         email = findViewById(R.id.profileEmail);
+        resetPassLocal = findViewById(R.id.resetPasswordLocal);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -45,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         verifyMsg = findViewById(R.id.verifyMsg);
 
         userId = fAuth.getCurrentUser().getUid();
-        final FirebaseUser user = fAuth.getCurrentUser();
+        user = fAuth.getCurrentUser();
 
         if(!user.isEmailVerified()){
             verifyMsg.setVisibility(View.VISIBLE);
@@ -82,6 +88,49 @@ public class MainActivity extends AppCompatActivity {
                email.setText(documentSnapshot.getString("email"));
             }
         });
+
+        resetPassLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final EditText resetPassword = new EditText(v.getContext());
+
+                final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+                passwordResetDialog.setTitle("Reset Passsword ?");
+                passwordResetDialog.setMessage("Enter New Password > 6 characters long.");
+                passwordResetDialog.setView(resetPassword);
+
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //extract the email and send reset link
+
+                        String newPassword = resetPassword.getText().toString();
+                        user.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(MainActivity.this, "Password Reset Successfully." , Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MainActivity.this, "password Reset Failed." , Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
+                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //close
+                    }
+                });
+                passwordResetDialog.create().show();
+            }
+        });
+
+           
 
 
     }
