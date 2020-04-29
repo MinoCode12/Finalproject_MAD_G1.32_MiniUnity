@@ -1,12 +1,16 @@
 package com.example.userauthentication;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     String userId;
     Button resendCode;
-    Button resetPassLocal;
+    Button resetPassLocal,changeProfileImage;
     FirebaseUser user;
+    ImageView profileImage;
+
 
 
     @Override
@@ -43,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         fullName = findViewById(R.id.profileName);
         email = findViewById(R.id.profileEmail);
         resetPassLocal = findViewById(R.id.resetPasswordLocal);
+
+        profileImage = findViewById(R.id.profileImage);
+        changeProfileImage = findViewById(R.id.changeProfile);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -130,9 +139,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-           
+        changeProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open gallary
+
+                Intent openGallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGallaryIntent,1000);
+            }
+        });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000){
+            if (resultCode == Activity.RESULT_OK){
+                Uri imageUri = data.getData();
+                profileImage.setImageURI(imageUri);
+
+            }
+        }
     }
 
     public void logout(View view) {
