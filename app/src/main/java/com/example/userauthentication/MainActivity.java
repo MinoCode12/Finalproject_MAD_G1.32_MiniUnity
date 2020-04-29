@@ -28,6 +28,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class MainActivity extends AppCompatActivity {
     TextView fullName,email,phone,verifyMsg;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     Button resetPassLocal,changeProfileImage;
     FirebaseUser user;
     ImageView profileImage;
+    StorageReference storageReference;
 
 
 
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         resendCode = findViewById(R.id.resendCode);
         verifyMsg = findViewById(R.id.verifyMsg);
@@ -160,8 +165,26 @@ public class MainActivity extends AppCompatActivity {
                 Uri imageUri = data.getData();
                 profileImage.setImageURI(imageUri);
 
+                uploadImageToFirebase(imageUri);
+
             }
         }
+    }
+
+    private void uploadImageToFirebase(Uri imageUri) {
+        //upload image to firebase storage
+        StorageReference fileRef = storageReference.child("profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(MainActivity.this, "Image Uploaded." , Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "Failed." , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void logout(View view) {
