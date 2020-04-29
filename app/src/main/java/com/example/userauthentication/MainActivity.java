@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
     TextView fullName,email,phone,verifyMsg;
@@ -60,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileImage);
+            }
+        });
 
         resendCode = findViewById(R.id.resendCode);
         verifyMsg = findViewById(R.id.verifyMsg);
@@ -163,7 +172,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1000){
             if (resultCode == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
-                profileImage.setImageURI(imageUri);
+
+                //profileImage.setImageURI(imageUri);
 
                 uploadImageToFirebase(imageUri);
 
@@ -173,11 +183,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void uploadImageToFirebase(Uri imageUri) {
         //upload image to firebase storage
-        StorageReference fileRef = storageReference.child("profile.jpg");
+        final StorageReference fileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(MainActivity.this, "Image Uploaded." , Toast.LENGTH_SHORT).show();
+              fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                  @Override
+                  public void onSuccess(Uri uri) {
+                      Picasso.get().load(uri).into(profileImage);
+                  }
+              });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
