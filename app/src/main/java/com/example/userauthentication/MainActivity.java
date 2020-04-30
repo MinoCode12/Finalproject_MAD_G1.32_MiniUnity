@@ -105,9 +105,13 @@ public class MainActivity extends AppCompatActivity {
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-               phone.setText(documentSnapshot.getString("phone"));
-               fullName.setText(documentSnapshot.getString("fName"));
-               email.setText(documentSnapshot.getString("email"));
+                if (documentSnapshot.exists()) {
+                    phone.setText(documentSnapshot.getString("phone"));
+                    fullName.setText(documentSnapshot.getString("fName"));
+                    email.setText(documentSnapshot.getString("email"));
+                }else{
+                    Log.d("tag", "onEvent: Document do not exist");
+                }
             }
         });
 
@@ -157,9 +161,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //open gallary
                 Intent i = new Intent(v.getContext(),EditProfile.class);
-                i.putExtra("fullName","Anjelo Minosh");
-                i.putExtra("email","minoshbalasuriya12@gmail.com");
-                i.putExtra("phone","0763589628");
+                i.putExtra("fullName",fullName.getText().toString());
+                i.putExtra("email",email.getText().toString());
+                i.putExtra("phone",phone.getText().toString());
                 startActivity(i);
 
     //            Intent openGallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
