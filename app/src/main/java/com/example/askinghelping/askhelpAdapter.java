@@ -74,7 +74,7 @@ public class askhelpAdapter extends RecyclerView.Adapter<askhelpAdapter.askhelpV
         public void onClick(View v) {
             askhelp ah = askhelp.get(getAdapterPosition());
             Intent intent = new Intent(mCtx, UpdateAskhelpActivity.class);
-            intent.putExtra("askhelp", ah);
+            intent.putExtra("askhelp", ah.getClass());
             mCtx.startActivity(intent);
         }
     }
