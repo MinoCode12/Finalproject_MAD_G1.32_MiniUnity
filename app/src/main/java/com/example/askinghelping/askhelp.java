@@ -4,6 +4,7 @@ public class askhelp {
     private  String description;
     private  String location;
     private  String telNo;
+    private String id;
 
 
     public askhelp() {
@@ -26,5 +27,25 @@ public class askhelp {
 
     public String getTelNo() {
         return telNo;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
