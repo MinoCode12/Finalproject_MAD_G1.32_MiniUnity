@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dd"
     tools:context=".UpdateAskhelpActivity">
 
 
@@ -27,8 +28,8 @@
             android:id="@+id/edittext_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/edittext_background"
             android:hint="name"
             android:padding="10dp" />
@@ -37,8 +38,8 @@
             android:id="@+id/edittext_brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/edittext_background"
             android:hint="brand"
             android:padding="10dp" />
@@ -48,8 +49,8 @@
             android:id="@+id/edittext_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/edittext_background"
             android:hint="description"
             android:padding="10dp" />
@@ -58,8 +59,8 @@
             android:id="@+id/edittext_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/edittext_background"
             android:digits="0123456789."
             android:hint="price"
@@ -70,8 +71,8 @@
             android:id="@+id/edittext_qty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/edittext_background"
             android:digits="0123456789"
             android:hint="quantity"
