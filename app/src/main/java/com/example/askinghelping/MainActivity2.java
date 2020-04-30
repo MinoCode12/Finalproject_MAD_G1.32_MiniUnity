@@ -1,13 +1,13 @@
 package com.example.askinghelping;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,13 +17,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity2 extends AppCompatActivity implements View.OnClickListener{
 
+
     EditText editTextDesc;
     EditText editTextLocation;
     EditText editTextTelNo;
 
     private FirebaseFirestore db;
 
-    //hello
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
         editTextTelNo=(EditText) findViewById(R.id.edittext_telNo);
 
         findViewById(R.id.btnSend).setOnClickListener(this);
-        findViewById(R.id.showBtn).setOnClickListener(this);
+
 
     }
     private boolean ValidateInputs(String desc, String loc, String tel) {

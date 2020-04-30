@@ -1,30 +1,30 @@
 package com.example.askinghelping;
 
 public class askhelp {
-    private static String description;
-    private static String loaction;
-    private static String telNo;
+    private  String description;
+    private  String location;
+    private  String telNo;
 
 
     public askhelp() {
     }
 
-    public askhelp(String description, String loaction, String telNo) {
+    public askhelp(String description, String location, String telNo) {
         this.description = description;
-        this.loaction = loaction;
+        this.location = location;
         this.telNo = telNo;
 
     }
 
-    public static String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public static String getLoaction() {
-        return loaction;
+    public String getLocation() {
+        return location;
     }
 
-    public static String getTelNo() {
+    public String getTelNo() {
         return telNo;
     }
 }
