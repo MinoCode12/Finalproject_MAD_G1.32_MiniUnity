@@ -17,8 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     String userId;
     Button resendCode;
     Button resetPassLocal,changeProfileImage;
+    Button deleteAccount;
     FirebaseUser user;
     ImageView profileImage;
     StorageReference storageReference;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         fullName = findViewById(R.id.profileName);
         email = findViewById(R.id.profileEmail);
         resetPassLocal = findViewById(R.id.resetPasswordLocal);
+        deleteAccount = findViewById(R.id.btnDeleteAccount);
 
         profileImage = findViewById(R.id.profileImage);
         changeProfileImage = findViewById(R.id.changeProfile);
@@ -110,6 +114,44 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     Log.d("tag", "onEvent: Document do not exist");
                 }
+            }
+        });
+
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                dialog.setTitle("Are You Sure ?");
+                dialog.setMessage("Deleting this account will result in completly removing your account from the system and you won't be able to access the app.");
+
+                dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(MainActivity.this,"Account Deleted.",Toast.LENGTH_LONG).show();
+
+                                    startActivity(new Intent(getApplicationContext(),Login.class));
+                                    finish();
+                                }else{
+                                    Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    }
+                });
+
+                dialog.setNegativeButton("Dissmiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                       dialog.dismiss(); 
+                    }
+                });
+
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
             }
         });
 

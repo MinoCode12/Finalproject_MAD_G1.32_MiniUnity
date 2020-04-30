@@ -63,6 +63,7 @@ public class EditProfile extends AppCompatActivity {
         profileImageView = findViewById(R.id.profileImageView);
         saveBtn = findViewById(R.id.saveProfileInfo);
 
+
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -115,6 +116,9 @@ public class EditProfile extends AppCompatActivity {
                 });
             }
         });
+
+
+
 
         profileEmail.setText(email);
         profileFullName.setText(fullName);
