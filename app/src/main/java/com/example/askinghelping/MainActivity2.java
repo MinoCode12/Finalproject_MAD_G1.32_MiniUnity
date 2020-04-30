@@ -1,6 +1,7 @@
 package com.example.askinghelping;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -40,7 +41,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
 
 
     }
-    private boolean ValidateInputs(String desc, String loc, String tel) {
+    private boolean hasValidationErrors(String desc, String loc, String tel) {
         if (desc.isEmpty()) {
             editTextDesc.setError("Description required");
             editTextDesc.requestFocus();
@@ -64,8 +65,8 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
 
 
 
-    @Override
-    public void onClick(View v) {
+
+    public void saveMsg(){
 
         String desc = editTextDesc.getText().toString().trim();
         String loc = editTextLocation.getText().toString().trim();
@@ -73,7 +74,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
 
 
 
-        if(!ValidateInputs(desc,loc,tel)){
+        if(!hasValidationErrors(desc,loc,tel)){
 
             CollectionReference askHelp=db.collection("askHelp");
 
@@ -96,4 +97,18 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
         }
 
     }
+    @Override
+    public void onClick(View v) {
+
+        switch(v.getId()){
+            case R.id.btnSend:
+                saveMsg();
+                break;
+            case R.id.showBtn:
+                startActivity(new Intent(this, askhelpActivity.class));
+                break;
+        }
+
+    }
+
 }
