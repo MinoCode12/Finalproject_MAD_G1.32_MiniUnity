@@ -3,6 +3,7 @@ package com.example.feedbackpage;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -21,18 +22,15 @@ public class aboutus extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         simulateDayNight(/*DAY*/0);
         Element adsElement = new Element();
-        adsElement.setTitle("Advertise with us");
-
-
-
-        View Aboutus = new AboutPage(this)
+        adsElement.setTitle("Stay SAFE protect Your Life");
+        View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.drawable.healthcare)
                 .addItem(new Element().setTitle("Version 1.0"))
                 .addItem(adsElement)
                 .setDescription("Mini Unity app is a Emergency Contact Application. So you can contact Any life thread you have use this app and get help immediately. " +
                         "SLIIT MAD Group Year 2 Sem2 01.1 Natural Selection Group. All right reserved.")
-                .addGroup("Connect with us")
+                .addGroup("Connect with us :-")
                 .addEmail("gayan982822513.lk@gmail.com")
                 .addFacebook("Mini Unity")
                 .addTwitter("Mini Unity")
@@ -41,7 +39,7 @@ public class aboutus extends AppCompatActivity {
                 .addYoutube("Mini Unity")
                 .addItem(copyright())
                 .create();
-        setContentView(R.layout.activity_aboutus);
+        setContentView(aboutPage);
     }
 
     private void simulateDayNight(int currentsetting) {

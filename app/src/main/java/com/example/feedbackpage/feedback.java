@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
+import android.content.Intent;
 
 import com.basgeekball.awesomevalidation.validators.Validator;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -30,6 +32,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class feedback extends AppCompatActivity{
+    public Button button;
+
     private static final String TAG = "feedback";
     private AwesomeValidation awesomeValidation;
     private static final String KEY_TITLE = "title";
@@ -46,6 +50,16 @@ public class feedback extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
+
+        button = (Button) findViewById(R.id.btn);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(feedback.this, aboutus.class);
+                startActivity(intent);
+            }
+        });
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
@@ -113,6 +127,10 @@ public class feedback extends AppCompatActivity{
                 });
     }
 
+        public void deleteNote(View v){
+            noteRef.delete();
+        }
+
         public void loadNote (View v){
             noteRef.get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -140,4 +158,3 @@ public class feedback extends AppCompatActivity{
 
         }
     }
-

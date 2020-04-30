@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">feedbackpage</string>
-
     <string name="Titleerror">Enter a valid title </string>
     <string name="Descriptionerror">Enter Description About our app </string>
 </resources>
