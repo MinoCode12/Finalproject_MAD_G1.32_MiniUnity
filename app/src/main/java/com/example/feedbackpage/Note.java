@@ -11,6 +11,7 @@ public class Note {
     public Note(String title, String description){
         this.title = title;
         this.description = description;
+        this.getTitle();
     }
 
     public String getTitle(){
@@ -20,4 +21,5 @@ public class Note {
     public String getDescription(){
         return description;
     }
+
 }
