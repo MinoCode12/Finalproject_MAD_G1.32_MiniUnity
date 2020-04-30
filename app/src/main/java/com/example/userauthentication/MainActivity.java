@@ -1,6 +1,5 @@
 package com.example.userauthentication;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -29,7 +28,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
@@ -174,41 +172,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000){
-            if (resultCode == Activity.RESULT_OK){
-                Uri imageUri = data.getData();
 
-                //profileImage.setImageURI(imageUri);
 
-                uploadImageToFirebase(imageUri);
 
-            }
-        }
-    }
-
-    private void uploadImageToFirebase(Uri imageUri) {
-        //upload image to firebase storage
-        final StorageReference fileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"profile.jpg");
-        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-              fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                  @Override
-                  public void onSuccess(Uri uri) {
-                      Picasso.get().load(uri).into(profileImage);
-                  }
-              });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "Failed." , Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();//logout
